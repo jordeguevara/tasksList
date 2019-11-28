@@ -17,4 +17,4 @@ npm start
 open up broswer on localhost:3000
 ```
 
-4. (Live Preview )[http://last-volcano.surge.sh/]
+4. [Live Preview ](http://last-volcano.surge.sh/)
