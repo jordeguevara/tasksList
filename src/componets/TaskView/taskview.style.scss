@@ -1,0 +1,24 @@
+
+  
+  .taskView{
+    margin-top: 25px;
+    background: #f3f3f3;
+    min-height: 500px;
+    max-height: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+    padding: 15px 0 25px 0;
+  }
+  
+  
+  .key{
+    // border-radius: 50%;
+      padding: 5px;
+      height:60px;
+      width:60px;
+      font-size: 10px;
+      font-weight: 700;
+  }

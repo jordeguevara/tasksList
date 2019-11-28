@@ -1,24 +1,163 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect, useRef } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.scss";
+import Modal from "./componets/Modal/modal.componet";
+import TaskView from "./componets/TaskView/taskview";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+
+const KeyView = () => (
+  <div style={{ marginTop: 15, marginBottom: 15 }}>
+    <span>Priority Levels </span>
+    <span className="key" style={{ background: "#ffd700" }}>
+      Low
+    </span>
+    <span className="key" style={{ background: "orange" }}>
+      Medium
+    </span>
+    <span className="key" style={{ background: "red" }}>
+      High
+    </span>
+  </div>
+);
 
 function App() {
+  const [avoidIDCollisions, setIDarr] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [showModal, setModal] = useState(false);
+  const [value, setValue] = useState("");
+  const [edited, setEdited] = useState(false);
+  const [reset, setReset] = useState(false);
+  const [id, setId] = useState(0);
+
+  const mounted = useRef();
+
+  useEffect(() => {
+    let sessionTasks = sessionStorage.getItem("userTasks");
+    let sessionIdsArr = sessionStorage.getItem("IDArr");
+    let sessionId = sessionStorage.getItem("id");
+    if (sessionTasks !== null) {
+      setTasks(JSON.parse(sessionStorage.getItem("userTasks")));
+    }
+    if (sessionIdsArr !== null) {
+      setIDarr(JSON.parse(sessionStorage.getItem("IDArr")));
+    }
+    if (sessionId !== null) {
+      setId(JSON.parse(sessionStorage.getItem("id")));
+    } else {
+      setIDarr(avoidIDCollisions.concat(id));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      setReset(true);
+      sessionStorage.setItem("userTasks", JSON.stringify(tasks));
+      sessionStorage.setItem("IDArr", JSON.stringify(avoidIDCollisions));
+      sessionStorage.setItem("id", JSON.stringify(id));
+    }
+  }, [avoidIDCollisions, id, tasks]);
+
+  const displayModal = () => {
+    setModal(true);
+  };
+
+  const hideModal = () => {
+    setModal(false);
+  };
+
+  const addToList = val => {
+    setTasks(tasks.concat(val));
+  };
+
+  const editTask = id => {
+    setEdited(true);
+    const editingOne = tasks.filter(task => task.id === id);
+    setValue(editingOne[0].description);
+    setId(editingOne[0].id);
+    setModal(true);
+  };
+
+  const editToList = val => {
+    let arr = [...tasks];
+    const list = arr.map(item => {
+      if (val.id === item.id) {
+        return val;
+      } else {
+        return item;
+      }
+    });
+    setTasks(list);
+    sessionStorage.setItem("userTasks", JSON.stringify(tasks));
+    setId(avoidIDCollisions[avoidIDCollisions.length - 1] + 1);
+  };
+
+  const deleteTask = id => {
+    const arr = tasks.slice(0);
+    const taskWithDeleted = arr.filter(item => item.id !== id);
+    setTasks(taskWithDeleted);
+  };
+
+  const sortAscending = () => {
+    const arr = tasks.slice(0);
+    const sortedTask = arr.sort(
+      (a, b) => parseInt(a.priority) - parseInt(b.priority)
+    );
+    setTasks(sortedTask);
+  };
+
+  const sortDescending = () => {
+    const arr = tasks.slice(0);
+    const sortedTask = arr.sort(
+      (a, b) => parseInt(b.priority) - parseInt(a.priority)
+    );
+    setTasks(sortedTask);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container bg-main">
+      <h2 style={{ textAlign: "center" }}>Task List</h2>
+      <KeyView />
+      <Modal
+        setId={setId}
+        id={id}
+        value={value}
+        setValue={setValue}
+        show={showModal}
+        handleClose={hideModal}
+        add={addToList}
+        setEdited={setEdited}
+        edited={edited}
+        editToList={editToList}
+        setReset={setReset}
+        reset={reset}
+        setIDarr={setIDarr}
+        avoidIDCollisions={avoidIDCollisions}
+      />
+      <button
+        className="button btn-main"
+        style={{ marginRight: 10 }}
+        onClick={displayModal}
+      >
+        +
+      </button>
+      <button
+        className="button btn-main"
+        style={{ marginRight: 10, marginLeft: 10 }}
+        onClick={sortAscending}
+      >
+        Sort <FontAwesomeIcon icon={faAngleUp} size="1x" />
+      </button>
+      <button
+        className="button btn-main"
+        style={{ marginRight: 10, marginLeft: 10 }}
+        onClick={sortDescending}
+      >
+        Sort <FontAwesomeIcon icon={faAngleDown} size="1x" />
+      </button>
+      <TaskView tasks={tasks} deleteTask={deleteTask} editTask={editTask} />
     </div>
   );
 }

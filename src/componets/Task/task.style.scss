@@ -1,0 +1,46 @@
+.task{
+    flex-shrink: 0;
+    display: flex;
+    min-height: 75px;
+    background: #fff;
+    margin-top: 30px;
+    width: 80%;
+    box-shadow:0px 13px 21px -5px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    // border: 1px solid rgba(0, 0, 0, 0.125);
+    // border-radius: 0.25rem;
+  
+  }
+
+  .action{
+    display: flex;
+    align-items: center;
+  
+  }
+  
+  .task-desc{
+    display: flex;
+    align-items: center;
+    width: 88%;
+    padding: 10px;
+  }
+
+  .tag{
+    border-radius: 50%;
+      padding: 5px;
+      margin: 0 5px 0 5px ;
+      height:15px;
+      width:15px;
+      font-size: 10px;
+      font-weight: 700;
+  
+  }
