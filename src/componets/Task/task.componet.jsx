@@ -4,7 +4,6 @@ import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Style from './task.style.scss'
 
 function Task({description,priority,markTag,editTask,deleteTask,id,idx}) {
-  console.log(description,priority,id,idx)
 return(
     <div className="task" key={idx}>
     <p className="task-desc">{description}</p>
