@@ -1,5 +1,7 @@
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
+body{
+    background-image: url('bg.jpg');
+    background-color: #000;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+  }

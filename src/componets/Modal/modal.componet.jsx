@@ -1,6 +1,11 @@
 import React, { useState, useRef } from "react";
 import Dropdown from "../DropDown/dropdown.componet";
 import styles from "./modal.style.scss";
+
+const MarginStyle = {
+  small: { marginRight: 5, marginLeft: 5 },
+  large: { marginRight: 25, marginLeft: 25 }
+};
 const Modal = ({
   handleClose,
   show,
@@ -38,42 +43,45 @@ const Modal = ({
       selected: false
     }
   ]);
-  const [validated, setValidated] = useState(false);
+  const [validated, setValidated] = useState(true);
 
-  const focus = ()=> inputEl.current.focus()
+  const focus = () => inputEl.current.focus();
 
   const isValid = () => {
     if (priority >= 0 && value.length >= 2) {
-      setValidated(true);
       return true;
     } else {
-      alert("Make sure you add a task with a priority");
       return false;
     }
   };
 
   const addTask = () => {
-    isValid();
-    if (validated) {
+
+    if (isValid()) {
       add({ id: id, description: value, priority: priority });
       setId(id + 1);
       setIDarr(avoidIDCollisions.concat(id + 1));
       setValue("");
       setPriority(-1);
-      setValidated(false);
+      setValidated(true);
       handleClose();
+    }
+    else{
+      setValidated(false);
     }
   };
 
   const editTask = () => {
-    isValid();
-    if (validated) {
+    if (isValid()) {
       editToList({ id: id, description: value, priority: priority });
       setEdited(false);
       setValue("");
       setPriority(-1);
-      setValidated(false);
+      setValidated(true);
       handleClose();
+    }
+    else{
+      setValidated(false);
     }
   };
 
@@ -91,7 +99,7 @@ const Modal = ({
             onChange={e => handleChange(e)}
           />
           <Dropdown
-            style={{ marginRight: 25, marginLeft: 25 }}
+            style={MarginStyle.large}
             title="Select Priority"
             list={DropDownlist}
             setPriority={setPriority}
@@ -99,16 +107,17 @@ const Modal = ({
             setReset={setReset}
           />
         </form>
+        {validated ? null : <p style={{textAlign:'center', color: 'red', fonrSize: '11px'}}>Make sure you add a task of length >= 2 and select a priority</p>}
         <div className="modal-footer">
           <button
-            style={{ marginRight: 5, marginLeft: 5 }}
+            style={MarginStyle.low}
             className=" button btn-primary"
             onClick={edited ? editTask : addTask}
           >
             {edited ? "Edit" : "Add"}
           </button>
           <button
-            style={{ marginTop: 5, marginLeft: 5 }}
+            style={MarginStyle.low}
             className=" button btn-secondary"
             onClick={handleClose}
           >

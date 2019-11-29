@@ -6,16 +6,32 @@ import TaskView from "./componets/TaskView/taskview";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 
+const KeyViewStyle = {
+  marginTop: 15,
+  marginBottom: 15
+};
+
+const PriorityStyle = {
+  low: { background: "#ffd700" },
+  medium: { background: "orange" },
+  high: { background: "red" },
+  text: {color : '#fff'}
+};
+
+const ButtonStyle = {
+  marginRight: 10,
+  marginLeft: 10
+};
 const KeyView = () => (
-  <div style={{ marginTop: 15, marginBottom: 15 }}>
-    <span>Priority Levels </span>
-    <span className="key" style={{ background: "#ffd700" }}>
+  <div style={KeyViewStyle}>
+    <span style={PriorityStyle.text}>Priority Levels </span>
+    <span className="key" style={PriorityStyle.low}>
       Low
     </span>
-    <span className="key" style={{ background: "orange" }}>
+    <span className="key" style={PriorityStyle.medium}>
       Medium
     </span>
-    <span className="key" style={{ background: "red" }}>
+    <span className="key" style={PriorityStyle.high}>
       High
     </span>
   </div>
@@ -118,7 +134,7 @@ function App() {
 
   return (
     <div className="container bg-main">
-      <h2 style={{ textAlign: "center" }}>Task List</h2>
+      <h2 className="header">Tasks List</h2>
       <KeyView />
       <Modal
         setId={setId}
@@ -138,21 +154,21 @@ function App() {
       />
       <button
         className="button btn-main"
-        style={{ marginRight: 10 }}
+        style={ButtonStyle}
         onClick={displayModal}
       >
         +
       </button>
       <button
         className="button btn-main"
-        style={{ marginRight: 10, marginLeft: 10 }}
+        style={ButtonStyle}
         onClick={sortAscending}
       >
         Sort <FontAwesomeIcon icon={faAngleUp} size="1x" />
       </button>
       <button
         className="button btn-main"
-        style={{ marginRight: 10, marginLeft: 10 }}
+        style={ButtonStyle}
         onClick={sortDescending}
       >
         Sort <FontAwesomeIcon icon={faAngleDown} size="1x" />
