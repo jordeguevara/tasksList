@@ -114,7 +114,7 @@ const Modal = ({
             className=" button btn-primary"
             onClick={edited ? editTask : addTask}
           >
-            {edited ? "Edit" : "Add"}
+            {edited ? "Save" : "Add"}
           </button>
           <button
             style={MarginStyle.low}
