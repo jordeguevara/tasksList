@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
-import style from './dropdown.style.scss'
+import './dropdown.style.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown,faAngleUp } from '@fortawesome/free-solid-svg-icons'
 

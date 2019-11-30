@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import Dropdown from "../DropDown/dropdown.componet";
-import styles from "./modal.style.scss";
+import "./modal.style.scss";
 
 const MarginStyle = {
   small: { marginRight: 5, marginLeft: 5 },

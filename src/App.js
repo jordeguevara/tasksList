@@ -15,7 +15,7 @@ const PriorityStyle = {
   low: { background: "#ffd700" },
   medium: { background: "orange" },
   high: { background: "red" },
-  text: {color : '#fff'}
+  text: { color: "#fff" }
 };
 
 const ButtonStyle = {
@@ -45,10 +45,10 @@ function App() {
   const [edited, setEdited] = useState(false);
   const [reset, setReset] = useState(false);
   const [id, setId] = useState(0);
-
   const mounted = useRef();
 
   useEffect(() => {
+    // First Render 
     let sessionTasks = sessionStorage.getItem("userTasks");
     let sessionIdsArr = sessionStorage.getItem("IDArr");
     let sessionId = sessionStorage.getItem("id");
@@ -59,7 +59,12 @@ function App() {
       setIDarr(JSON.parse(sessionStorage.getItem("IDArr")));
     }
     if (sessionId !== null) {
-      setId(JSON.parse(sessionStorage.getItem("id")));
+      // if refreshed before edit is submitted update id to most recent id
+      const currentId = JSON.parse(sessionStorage.getItem("id"))
+      const arr = JSON.parse(sessionStorage.getItem("IDArr"))
+      const mostRecentId = arr[arr.length-1];
+      const newId = currentId < mostRecentId ? mostRecentId : currentId;
+      setId(newId);
     } else {
       setIDarr(avoidIDCollisions.concat(id));
     }
@@ -82,6 +87,12 @@ function App() {
 
   const hideModal = () => {
     setModal(false);
+    //
+    if (edited) {
+      setId(avoidIDCollisions[avoidIDCollisions.length - 1]);
+      setValue("");
+      setEdited(false);
+    }
   };
 
   const addToList = val => {

@@ -1,6 +1,6 @@
 import React from "react";
 import Task from "../Task/task.componet";
-import styles from "./taskview.style.scss";
+import "./taskview.style.scss";
 
 function TaskView({ tasks, deleteTask, editTask }) {
   const TaskDefaultStyle = {
@@ -9,7 +9,7 @@ function TaskView({ tasks, deleteTask, editTask }) {
     color: "#fff",
     fontSize: "11px"
   };
-  const TaskDefault = <p style={TaskDefaultStyle}>No Tasks to display</p>;
+  const TaskDefault = <p style={TaskDefaultStyle}>No tasks to display</p>;
 
   const markTag = priority => {
     switch (priority) {
