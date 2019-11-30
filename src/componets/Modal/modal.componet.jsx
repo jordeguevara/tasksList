@@ -107,7 +107,7 @@ const Modal = ({
             setReset={setReset}
           />
         </form>
-        {validated ? null : <p style={{textAlign:'center', color: 'red', fonrSize: '11px'}}>Make sure you add a task of length >= 2 and select a priority</p>}
+        {validated ? null : <p style={{textAlign:'center', color: 'red', fontSize: '12px'}}>Make sure you add a task of length >= 2 and select a priority</p>}
         <div className="modal-footer">
           <button
             style={MarginStyle.low}
